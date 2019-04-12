@@ -123,7 +123,7 @@ Character.prototype.rush(){
 
 ### Git
 URls for the project repo and deploy
-[Link Repo](https://github.com/Gabriel0liver/skull-jumper)
+[Link Repo](https://github.com/chloeleteinturier/Tetris)
 [Link Deploy]()
 
 
