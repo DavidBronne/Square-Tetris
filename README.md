@@ -5,7 +5,7 @@ Tetris is a game where the player have to stack blocks of diferent sizes to real
 
 
 ## MVP (DOM - CANVAS)
-*CANVAS*, This is a game where the player can move shape 
+*CANVAS*, This is a game where the player can move and stack block.
 
 ## Backlog
 - Speed Level
