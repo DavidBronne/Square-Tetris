@@ -9,6 +9,7 @@ function main() {
     mainElement.innerHTML = html;
   }
 
+  buildSplashScreen();
 
 
   function buildSplashScreen(){
@@ -18,26 +19,38 @@ function main() {
         <button class="start-button">START</button>
       </section>
     `);
-
     const startButton = document.querySelector('.start-button');
     startButton.addEventListener('click', buildGameSreen);
-
   }
-  buildSplashScreen();
+  
 
 
   function buildGameSreen(){
     buildDom(`
-    <section class="game-info">
-      <img class="next-block" src="#" alt="next piece"></img>
+    <section class="game-container">
+      <div class="game-info">
+        <img class="next-block" src="#" alt="next piece"></img>
+      </div>
+      <canvas class="game"></canvas>
     </section>
-    <canvas class"game-container"></canvas>
   `);
 
     const gameInfo = document.querySelector('.game-info');
-    const canvasElement = document.querySelector('.game-container')
+
+    const gameContainerElement = document.querySelector('.game-container');
+    const width = gameContainerElement.offsetWidth /2;
+    const height = gameContainerElement.offsetHeight;
+
+    const canvasElement = document.querySelector('.game');
+
+    canvasElement.setAttribute('width', width);
+    canvasElement.setAttribute('height', height);
 
 
+
+    const game = new Game(canvasElement);
+
+    game.startLoop()
 
 
 
@@ -53,7 +66,7 @@ function main() {
 
 
     // setTimeout(buildGameOverScreen, 3000);
-  }
+    }
 
 
 

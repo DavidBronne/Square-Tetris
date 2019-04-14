@@ -6,12 +6,15 @@ html {
 
 body {
   margin: 0;
-  padding: 0 15%;
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 main{
-  margin: 20px 50px;
-  height: 90vh;
+  height: 600px;
+  width : 600px;
   border: 1px solid black;
   display: flex;
   justify-content: center;
@@ -27,14 +30,21 @@ h1{
   
 }
 
-.game-info{
-  width: 45%;
-  height: 80%;
-
+.game-container {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game-container{
-  width: 45%;
-  height: 80%;
+.game-info{
+  width: 250px;
+  height: 500px;
+}
+
+.game{
+  width: 250px;
+  height: 500px;
   border: 1px solid black
 }
