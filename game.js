@@ -5,85 +5,66 @@ function Game (canvas) {
   this.ctx = this.canvas.getContext('2d');
   this.square = null;
   this.speed = 1;
-  this.squaresStack = [];
+  this.staticSquares = [];
   this.squareIsOver = true;
 }
 
 Game.prototype.startLoop = function(){
 
   this.squareIsOver = false
-  this.square = new Square(this.canvas);
-  this.square.randomSize();
-  this.square.draw();
+  this.activeSquare = new MovingSquare(this.canvas);
 
+  
   const loop = () => {
-    this.moveSquare();
+    this.updateCanvas();
+    this.clearCanvas();
+    this.checkCollisions();
+    this.drawCanvas();
 
-    if(this.squareIsOver) {
-      clearInterval(intervalId);
-      this.square = null;
-      this.startLoop()
-      window.requestAnimationFrame(loop)
-    }
+    console.log(this.staticSquares)
+
+    window.requestAnimationFrame(loop)
   }
-  let intervalId = setInterval(loop, 500 / this.speed);
 
-  const addInStack = () => {
-
-    
-
-    
-  }
-  
-  
-  window.requestAnimationFrame(loop)
+  loop()
 }
 
+Game.prototype.checkScreenCollision = function() {
 
-Game.prototype.moveSquare = function(){
-  this.square.clearSquare();
-  this.square.goDown();
-  this.CheckSquareOver();
-  this.square.draw();
-  
+  if(this.activeSquare.x < 0){
+    this.activeSquare.x = 0;
+  }else if(this.activeSquare.x > this.canvas.width - this.activeSquare.size){
+    this.activeSquare.x = this.canvas.width - this.activeSquare.size;
+  }
+
+  if(this.activeSquare.y > this.canvas.height - this.activeSquare.size){
+    this.activeSquare.y = this.canvas.height - this.activeSquare.size
+    this.hasCollided()
+  }
 }
-
-Game.prototype.lateralMove = function(){
-  this.square.clearSquare();
-  this.square.update();
+Game.prototype.checkCollisions = function(){
   this.checkScreenCollision();
-  this.square.draw();
-  this.square.setDirection(0);
 }
 
-Game.prototype.checkScreenCollision = function(){
-  if(this.square.x < 0){
-    this.square.x = 0;
-  }else if(this.square.x > this.canvas.width - this.square.size){
-    this.square.x = this.canvas.width - this.square.size;
-  }
-}
-
-Game.prototype.CheckSquareOver = function(){
-  if(this.square.y > this.canvas.height - this.square.size){
-    this.square.y = this.canvas.height - this.square.size;
-    this.squareIsOver = true;
-    this.squaresStack.push(this.square);
-    console.log(this.squaresStack);
-    return true;
-  }
+Game.prototype.hasCollided = function(){
+  this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size))
+  this.activeSquare = new MovingSquare(this.canvas)
 }
 
 Game.prototype.clearCanvas = function(){
-
+  this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
 }
 
 Game.prototype.updateCanvas = function(){
   
+  this.activeSquare.update()
 }
 
 Game.prototype.drawCanvas = function(){
-  
+  this.staticSquares.forEach((square)=>{
+    square.draw()
+  })
+  this.activeSquare.draw()
 }
 
 Game.prototype.checkOverFlow = function(){

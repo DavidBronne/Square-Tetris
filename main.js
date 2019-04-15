@@ -42,12 +42,12 @@ function main() {
     canvasElement.setAttribute('height', height);
 
     const game = new Game(canvasElement);
-
+    game.startLoop();
   
-    if(game.squareIsOver) {
-      console.log('square is over');
-      game.startLoop();
-    }
+    // if(game.squareIsOver) {
+    //   console.log('square is over');
+    //   game.startLoop();
+    // }
 
 
 
@@ -58,17 +58,29 @@ function main() {
       
       switch (event.keyCode) {
         case 39:
-          game.square.setDirection(1);
-          game.lateralMove();
+          game.activeSquare.goRight()
           break;
 
         case 37:
-          game.square.setDirection(-1);
-          game.lateralMove();  
+        game.activeSquare.goLeft()
           break;
         
         case 40:
-          game.moveSquare();
+          game.activeSquare.moveFaster();
+          break;
+
+        default:
+          break;
+      }
+
+    })
+
+    document.addEventListener('keyup', function (event) {
+      
+      switch (event.keyCode) {
+        
+        case 40:
+          game.activeSquare.moveSlower();
           break;
 
         default:
