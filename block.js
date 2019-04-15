@@ -11,15 +11,13 @@ function Square(canvas) {
   this.y = 0;
   this.size;
 
-
-  this.speed = 1;
   this.direction = 0;
   this.currentSquare;
   this.nextSquare;
 }
 
 Square.prototype.randomSize = function() {
-  let random1to3 = (Math.floor(Math.random()*3) +1)
+  let random1to3 = (Math.floor(Math.random()*3) +1);
   this.size = random1to3 * this.blockSize;
 }
 
@@ -28,11 +26,18 @@ Square.prototype.draw = function(){
   this.ctx.fillRect(this.x, this.y, this.size, this.size);
 }
 
+Square.prototype.clearSquare = function(){
+  this.ctx.clearRect(this.x, this.y, this.size, this.size);
+}
+
 Square.prototype.goDown = function(){
   this.y = this.y + this.blockSize;
 }
 
-Square.prototype.clearSquare = function(){
-  this.ctx.clearRect(this.x, this.y, this.size, this.size)
+Square.prototype.setDirection = function(newDirection){
+  this.direction = newDirection;
 }
 
+Square.prototype.update = function (){
+  this.x += this.direction * this.blockSize;
+}

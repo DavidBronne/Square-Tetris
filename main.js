@@ -11,7 +11,6 @@ function main() {
 
   buildSplashScreen();
 
-
   function buildSplashScreen(){
     buildDom(`
       <section>
@@ -23,8 +22,6 @@ function main() {
     startButton.addEventListener('click', buildGameSreen);
   }
   
-
-
   function buildGameSreen(){
     buildDom(`
     <section class="game-container">
@@ -40,30 +37,45 @@ function main() {
     const gameContainerElement = document.querySelector('.game-container');
     const width = gameContainerElement.offsetWidth /2;
     const height = gameContainerElement.offsetHeight;
-
     const canvasElement = document.querySelector('.game');
-
     canvasElement.setAttribute('width', width);
     canvasElement.setAttribute('height', height);
 
-
-
     const game = new Game(canvasElement);
 
-    game.startLoop()
+  
+    if(game.squareIsOver) {
+      console.log('square is over');
+      game.startLoop();
+    }
 
 
 
 
 
 
+    document.addEventListener('keydown', function (event) {
+      
+      switch (event.keyCode) {
+        case 39:
+          game.square.setDirection(1);
+          game.lateralMove();
+          break;
 
+        case 37:
+          game.square.setDirection(-1);
+          game.lateralMove();  
+          break;
+        
+        case 40:
+          game.moveSquare();
+          break;
 
+        default:
+          break;
+      }
 
-
-
-
-
+    })
 
     // setTimeout(buildGameOverScreen, 3000);
     }
