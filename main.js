@@ -41,17 +41,16 @@ function main() {
     canvasElement.setAttribute('width', width);
     canvasElement.setAttribute('height', height);
 
+
+
     const game = new Game(canvasElement);
+
     game.startLoop();
+
+    game.setGameOverCallback(buildGameOverScreen);
+
+
   
-    // if(game.squareIsOver) {
-    //   console.log('square is over');
-    //   game.startLoop();
-    // }
-
-
-
-
 
 
     document.addEventListener('keydown', function (event) {
@@ -62,7 +61,12 @@ function main() {
           break;
 
         case 37:
-        game.activeSquare.goLeft()
+          
+          console.log(game.activeSquare.isTouchingLeft);
+          
+          if(!game.activeSquare.isTouchingLeft){
+            game.activeSquare.goLeft()
+          }
           break;
         
         case 40:
@@ -89,7 +93,6 @@ function main() {
 
     })
 
-    // setTimeout(buildGameOverScreen, 3000);
     }
 
 
