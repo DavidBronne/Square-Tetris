@@ -17,6 +17,7 @@ Game.prototype.startLoop = function(){
   
   const loop = () => {
     this.isTouchingLeft()
+    this.isTouchingRight()
     this.updateCanvas();
     this.clearCanvas();
     this.checkCollisions();
@@ -73,33 +74,45 @@ Game.prototype.checkSquareCollision = function(){
 
 Game.prototype.isTouchingLeft = function () {
 
-  this.activeSquare.isTouchingLeft = false
+  this.activeSquare.isTouchingLeft = false;
 
   this.staticSquares.forEach((static) => {
 
-    const touchesLeft = this.activeSquare.x === static.x  + static.size
+    const touchesLeft = this.activeSquare.x === static.x  + static.size;
     const collidesBottom = this.activeSquare.y + this.activeSquare.size > static.y;
     const collidesTop = this.activeSquare.y < static.y + static.size;
 
-    
-    
     if(touchesLeft && collidesBottom && collidesTop) {
       console.log('heyyy, im touching the leeeeft')
        this.activeSquare.isTouchingLeft = true;
        return;
     }
-      
+  })
+}
+
+Game.prototype.isTouchingRight = function () {
+
+  this.activeSquare.isTouchingRight = false;
+  this.staticSquares.forEach((static) => {
+
+    const touchesRight = this.activeSquare.x +this.activeSquare.size === static.x;
+    const collidesBottom = this.activeSquare.y + this.activeSquare.size > static.y;
+    const collidesTop = this.activeSquare.y < static.y + static.size;
+
+      if(touchesRight && collidesBottom && collidesTop){
+        console.log('riiiiiight !!!')
+        this.activeSquare.isTouchingRight = true;
+        return;
+      }
+
+
 
   })
 
-  // else if(collisionYTop){
 
-    //   this.activeSquare.isTouchingLeft = false;
-    //   console.log(false);
-    //   return;
-      
-    // }
+
 }
+
 
 Game.prototype.checkCollisions = function(){
   this.checkScreenCollision();

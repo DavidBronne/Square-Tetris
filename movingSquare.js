@@ -16,7 +16,8 @@ function MovingSquare(canvas) {
   this.currentSquare;
   this.nextSquare;
 
-  this.IsTouchingLeft = false;
+  this.isTouchingRight = false;
+  this.isTouchingLeft = false;
 
   this.counter = 0
   this.speed = 15;

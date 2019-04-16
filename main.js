@@ -57,15 +57,14 @@ function main() {
       
       switch (event.keyCode) {
         case 39:
-          game.activeSquare.goRight()
+          if(!game.activeSquare.isTouchingRight){
+          game.activeSquare.goRight();
+          }
           break;
 
         case 37:
-          
-          console.log(game.activeSquare.isTouchingLeft);
-          
           if(!game.activeSquare.isTouchingLeft){
-            game.activeSquare.goLeft()
+            game.activeSquare.goLeft();
           }
           break;
         
