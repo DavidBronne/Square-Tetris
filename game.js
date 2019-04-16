@@ -18,8 +18,6 @@ Game.prototype.startLoop = function(){
   const loop = () => {
     this.isTouchingLeft()
     this.updateCanvas();
-    this.activeSquare.isTouchingLeft = false;
-
     this.clearCanvas();
     this.checkCollisions();
     this.checkOverFlow();
@@ -56,39 +54,39 @@ Game.prototype.checkScreenCollision = function() {
 
 Game.prototype.checkSquareCollision = function(){
   this.staticSquares.forEach((static) => {
+   
+    const collidesTop = this.activeSquare.y < static.y + static.size;
+    const collidesBottom = this.activeSquare.y + this.activeSquare.size > static.y;
+    const collidesLeft = this.activeSquare.x < static.x  + static.size
+    const collidesRight = this.activeSquare.x + this.activeSquare.size > static.x;
 
-
-    const collisionYBottom = (this.activeSquare.y + this.activeSquare.size )> static.y;
-    const collisionXBeginning = this.activeSquare.x >= static.x && this.activeSquare.x < (static.x + static.size);
-    const collisionXEnd = (this.activeSquare.x + this.activeSquare.size) > static.x && (this.activeSquare.x + this.activeSquare.size) <= (static.x + static.size);
-    const collisionYTop = this.activeSquare.y > (static.y + static.size);
-
-
-    if (((collisionYBottom && collisionXBeginning) || (collisionYBottom && collisionXEnd)) && !collisionYTop)  {
+    if(collidesTop && collidesBottom && collidesLeft && collidesRight){
       console.log('hasCollided')
-      this.activeSquare.y = static.y - this.activeSquare.size
+      this.activeSquare.y = static.y - this.activeSquare.size;
       this.hasCollided();
-      return;
-    } 
-    
+
+    }
   })
 }
 
+
+
 Game.prototype.isTouchingLeft = function () {
+
+  this.activeSquare.isTouchingLeft = false
 
   this.staticSquares.forEach((static) => {
 
-    const collisionYBottom = (this.activeSquare.y + this.activeSquare.size) > static.y;
-    const collisionYTop = this.activeSquare.y > (static.y + static.size);
+    const touchesLeft = this.activeSquare.x === static.x  + static.size
+    const collidesBottom = this.activeSquare.y + this.activeSquare.size > static.y;
+    const collidesTop = this.activeSquare.y < static.y + static.size;
+
     
-    if(collisionYBottom && (this.activeSquare.x === (static.x + static.size)) && !collisionYTop) {
-      console.log(true);
+    
+    if(touchesLeft && collidesBottom && collidesTop) {
+      console.log('heyyy, im touching the leeeeft')
        this.activeSquare.isTouchingLeft = true;
        return;
-    }else {
-      console.log(false);
-      this.activeSquare.isTouchingLeft = false;
-      return
     }
       
 

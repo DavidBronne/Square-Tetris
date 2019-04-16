@@ -1,7 +1,7 @@
 # TETRIS
 
 ## Description
-Tetris is a game where the player have to stack blocks of diferent sizes to realize one full line. After this, the line disappears and the game continues. There is no end. The game is over when one one the piece get stuck to the top.
+Tetris is a game where the player have to stack blocks of different sizes to realize one full line. After this, the line disappears and the game continues. There is no end. The game is over when one one the piece get stuck to the top.
 
 
 ## MVP (DOM - CANVAS)
@@ -124,7 +124,7 @@ Character.prototype.rush(){
 ### Git
 URls for the project repo and deploy
 [Link Repo](https://github.com/chloeleteinturier/Tetris)
-[Link Deploy]()
+[Link Deploy](https://chloeleteinturier.github.io/Tetris/)
 
 
 ### Slides
