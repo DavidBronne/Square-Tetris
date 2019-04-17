@@ -179,7 +179,6 @@ Game.prototype.CheckIfFullLine = function(){
     let InfoByLine = this.staticSquares.filter(function(obj){
       return obj.y === possibleLines[i];
     })
-    //console.log(InfoByLine)
 
     
     if(InfoByLine){
@@ -202,10 +201,10 @@ Game.prototype.CheckIfFullLine = function(){
 
     let infoOneLine = [possibleLines[i] , totalSize]
 
-    this.infoLines.push(infoOneLine)
-  }
+    //console.log(infoOneLine)
 
-  //console.log(this.infoLines)
+    this.infoLines.push([possibleLines[i] , totalSize])
+  }
 
   let linesToRemoveArr = [];
   this.linesToRemove = [];
@@ -217,15 +216,14 @@ Game.prototype.CheckIfFullLine = function(){
     return result;
   })
 
-  console.log('this.linesToRemoveArr', typeof(linesToRemoveArr), linesToRemoveArr)
+  //console.log('this.linesToRemoveArr', typeof(linesToRemoveArr), linesToRemoveArr)
 
   this.linesToRemove = linesToRemoveArr.map((obj)=>{
     return obj[0]
   })
 
-console.log('linesToRemove ', typeof(this.linesToRemove), this.linesToRemove)
+//console.log('linesToRemove ', typeof(this.linesToRemove), this.linesToRemove)
 
-console.log(this.linesToRemove.length)
 
   if(this.linesToRemove.length) this.RemoveFullLine()
 
@@ -238,22 +236,23 @@ Game.prototype.RemoveFullLine = function(){
 
   // this.linesToRemove
   // this.staticSquares
-  let newStack;
+  let newStack = this.staticSquares;
+
 
     for(let i=0; i<this.linesToRemove.length; i++){
-      newStack = this.staticSquares.filter((obj) => {
+      newStack = newStack.filter((obj) => {
         return obj.y !== this.linesToRemove[i];
       })
     }
+
+    console.log(newStack)
+
+
   this.staticSquares = newStack;
 
   this.staticSquares.forEach((obj) => {
     obj.y += this.activeSquare.blockSize;
   })
-
-
-  
-     console.log('full line !!')
 
   
 }
