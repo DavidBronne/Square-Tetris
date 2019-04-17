@@ -5,7 +5,9 @@ function Game (canvas) {
   this.ctx = this.canvas.getContext('2d');
   this.square = null;
   this.speed = 1;
+
   this.staticSquares = [];
+  this.infoLines = [];
   
   this.gameOver = false;
 }
@@ -25,12 +27,6 @@ Game.prototype.startLoop = function(){
     this.drawCanvas();
 
 
-    // console.log(this.activeSquare.IsTouchingLeft);
-    
-    
-
-    // console.log(this.staticSquares)
-
     if(this.gameOver === false){
       window.requestAnimationFrame(loop);
     }
@@ -38,6 +34,8 @@ Game.prototype.startLoop = function(){
 
   loop();
 }
+
+// proto movement square
 
 Game.prototype.checkScreenCollision = function() {
 
@@ -62,10 +60,8 @@ Game.prototype.checkSquareCollision = function(){
     const collidesRight = this.activeSquare.x + this.activeSquare.size > static.x;
 
     if(collidesTop && collidesBottom && collidesLeft && collidesRight){
-      console.log('hasCollided')
       this.activeSquare.y = static.y - this.activeSquare.size;
       this.hasCollided();
-
     }
   })
 }
@@ -83,9 +79,7 @@ Game.prototype.isTouchingLeft = function () {
     const collidesTop = this.activeSquare.y < static.y + static.size;
 
     if(touchesLeft && collidesBottom && collidesTop) {
-      console.log('heyyy, im touching the leeeeft')
        this.activeSquare.isTouchingLeft = true;
-       return;
     }
   })
 }
@@ -100,17 +94,9 @@ Game.prototype.isTouchingRight = function () {
     const collidesTop = this.activeSquare.y < static.y + static.size;
 
       if(touchesRight && collidesBottom && collidesTop){
-        console.log('riiiiiight !!!')
         this.activeSquare.isTouchingRight = true;
-        return;
       }
-
-
-
   })
-
-
-
 }
 
 
@@ -120,8 +106,23 @@ Game.prototype.checkCollisions = function(){
 }
 
 Game.prototype.hasCollided = function(){
-  this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size));
+  // this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size));
+  this.storeSquareToIndividualBlocks()
+  this.CheckIfFullLine();
+  console.log(this.infoLines)
   this.activeSquare = new MovingSquare(this.canvas);
+  //console.log(this.staticSquares);
+}
+
+Game.prototype.storeSquareToIndividualBlocks = function(){
+
+  const numOfLine = this.activeSquare.size / this.activeSquare.blockSize
+
+  for(let i=0; i<numOfLine; i++){
+    for(let j=0; j<numOfLine; j++)
+      this.staticSquares.push(new StaticSquare(this.canvas, this.activeSquare.x + i* this.activeSquare.blockSize, this.activeSquare.y + j * this.activeSquare.blockSize, this.activeSquare.blockSize ))
+  }
+
 }
 
 Game.prototype.clearCanvas = function(){
@@ -139,10 +140,6 @@ Game.prototype.drawCanvas = function(){
   this.activeSquare.draw();
 }
 
-
-
-
-
 Game.prototype.checkOverFlow = function(){
   this.staticSquares.forEach((static) => {
     if(static.y < 0){
@@ -154,4 +151,56 @@ Game.prototype.checkOverFlow = function(){
 
 Game.prototype.setGameOverCallback = function(buildGameOverScreen){
   this.buildGameOverScreen = buildGameOverScreen;
+}
+
+
+// proto removing line
+
+Game.prototype.CheckIfFullLine = function(){
+
+  this.infoLines = [];
+  let lineSizes;
+  let possibleLines = [];
+
+  var bottomToCheck = () => {
+    for (let i=0; i<=this.canvas.height - this.activeSquare.blockSize; i++ ){
+      if(i%25 === 0) possibleLines.push(i)
+    }
+  }
+  bottomToCheck()
+  //console.log(possibleLines)
+
+  for(let i=0; i<possibleLines.length; i++){
+
+    let InfoByLine = this.staticSquares.filter(function(obj){
+      return obj.y === possibleLines[i];
+    })
+    //console.log(InfoByLine)
+
+    
+    if(InfoByLine){
+      lineSizes = InfoByLine.map(function(obj){
+        return obj.size;
+      })
+    }
+
+    //console.log(lineSizes)
+
+    let totalSize;
+
+    if(lineSizes.length > 0){
+      totalSize = lineSizes.reduce((sum, obj)=>{
+        return sum + obj;
+      })
+    }
+
+    console.log(totalSize)
+
+    let infoOneLine = [possibleLines[i] , totalSize]
+
+    this.infoLines.push(infoOneLine)
+
+  }
+  
+
 }
