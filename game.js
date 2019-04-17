@@ -8,6 +8,7 @@ function Game (canvas) {
 
   this.staticSquares = [];
   this.infoLines = [];
+  this.linesToRemove;
   
   this.gameOver = false;
 }
@@ -18,6 +19,7 @@ Game.prototype.startLoop = function(){
 
   
   const loop = () => {
+   
     this.isTouchingLeft()
     this.isTouchingRight()
     this.updateCanvas();
@@ -109,7 +111,9 @@ Game.prototype.hasCollided = function(){
   // this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size));
   this.storeSquareToIndividualBlocks()
   this.CheckIfFullLine();
-  console.log(this.infoLines)
+
+  //console.log(this.infoLines)
+
   this.activeSquare = new MovingSquare(this.canvas);
   //console.log(this.staticSquares);
 }
@@ -194,13 +198,62 @@ Game.prototype.CheckIfFullLine = function(){
       })
     }
 
-    console.log(totalSize)
+    //console.log(totalSize)
 
     let infoOneLine = [possibleLines[i] , totalSize]
 
     this.infoLines.push(infoOneLine)
-
   }
+
+  //console.log(this.infoLines)
+
+  let linesToRemoveArr = [];
+  this.linesToRemove = [];
+
+  linesToRemoveArr = this.infoLines.filter((infos)=>{
+    
+    let result = (infos[1] === 250) 
+    infos.pop();
+    return result;
+  })
+
+  console.log('this.linesToRemoveArr', typeof(linesToRemoveArr), linesToRemoveArr)
+
+  this.linesToRemove = linesToRemoveArr.map((obj)=>{
+    return obj[0]
+  })
+
+console.log('linesToRemove ', typeof(this.linesToRemove), this.linesToRemove)
+
+console.log(this.linesToRemove.length)
+
+  if(this.linesToRemove.length) this.RemoveFullLine()
+
+  
   
 
+}
+
+Game.prototype.RemoveFullLine = function(){
+
+  // this.linesToRemove
+  // this.staticSquares
+  let newStack;
+
+    for(let i=0; i<this.linesToRemove.length; i++){
+      newStack = this.staticSquares.filter((obj) => {
+        return obj.y !== this.linesToRemove[i];
+      })
+    }
+  this.staticSquares = newStack;
+
+  this.staticSquares.forEach((obj) => {
+    obj.y += this.activeSquare.blockSize;
+  })
+
+
+  
+     console.log('full line !!')
+
+  
 }
