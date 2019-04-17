@@ -13,12 +13,12 @@ function main() {
 
   function buildSplashScreen(){
     buildDom(`
-      <section>
+      <section class="screen">
         <h1>TETRIS</h1>
-        <button class="start-button">START</button>
+        <button class="start button">START</button>
       </section>
     `);
-    const startButton = document.querySelector('.start-button');
+    const startButton = document.querySelector('.start');
     startButton.addEventListener('click', buildGameSreen);
   }
   
@@ -26,7 +26,7 @@ function main() {
     buildDom(`
     <section class="game-container">
       <div class="game-info">
-        <img class="next-block" src="#" alt="next piece"></img>
+        <p class="score"></p>
       </div>
       <canvas class="game"></canvas>
     </section>
@@ -41,13 +41,21 @@ function main() {
     canvasElement.setAttribute('width', width);
     canvasElement.setAttribute('height', height);
 
-
-
     const game = new Game(canvasElement);
+
+    function updateScore(){
+    
+      const scoreDisplay = document.querySelector('.score');
+      scoreDisplay.innerHTML = `SCORE: ${game.score}`;
+    }
+    
+    setInterval(updateScore, 200)
+
 
     game.startLoop();
 
     game.setGameOverCallback(buildGameOverScreen);
+    
 
 
   
@@ -81,7 +89,6 @@ function main() {
     document.addEventListener('keyup', function (event) {
       
       switch (event.keyCode) {
-        
         case 40:
           game.activeSquare.moveSlower();
           break;
@@ -89,22 +96,20 @@ function main() {
         default:
           break;
       }
-
     })
-
     }
 
 
 
   function buildGameOverScreen(){
     buildDom(`
-      <section>
+      <section class="screen">
       <h1>Game Over</h1>
-      <button class="restart-button">Start Again</button>
+      <button class="restart button">Start Again</button>
       </section>
     `);
 
-    const restartButton = document.querySelector('.restart-button');
+    const restartButton = document.querySelector('.restart');
     restartButton.addEventListener('click', buildGameSreen);
   }
 

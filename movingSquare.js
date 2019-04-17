@@ -21,11 +21,17 @@ function MovingSquare(canvas) {
 
   this.counter = 0
   this.speed = 15;
+
+  this.possibleColors = ['#cc0099', '#333399', '#00cc66'];
+  this.color = this.possibleColors[random1to3 -1]
+
+  
 }
 
 
 MovingSquare.prototype.draw = function(){
-  this.ctx.fillStyle = 'purple';
+  
+  this.ctx.fillStyle = this.color;
   this.ctx.fillRect(this.x, this.y, this.size, this.size);
 }
 

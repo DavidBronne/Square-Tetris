@@ -10,23 +10,38 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(images/Venice\ Blue.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: 'Bungee', cursive;
+  color: #043349;
 }
 
 main{
   height: 600px;
   width : 600px;
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  
 }
 
 h1{
   text-align: center;
+  font-size: 80px;
+  width: 100%
 }
 
-.start-button{
+.button{
+  /* width: 100%; */
+  width: 300px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;  
+  font-size: 30px;
+  font-family: 'Bungee', cursive;
+  color: #1E6887;
+  background: #74d3d2;
   
 }
 
@@ -34,6 +49,12 @@ h1{
   width: 500px;
   height: 500px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.screen{
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -46,5 +67,5 @@ h1{
 .game{
   width: 250px;
   height: 500px;
-  border: 1px solid black
+  border: 10px solid #1D6786
 }

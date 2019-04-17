@@ -9,6 +9,8 @@ function Game (canvas) {
   this.staticSquares = [];
   this.infoLines = [];
   this.linesToRemove;
+
+  this.score = 0;
   
   this.gameOver = false;
 }
@@ -20,6 +22,8 @@ Game.prototype.startLoop = function(){
   
   const loop = () => {
    
+  // console.log(this.score);
+
     this.isTouchingLeft()
     this.isTouchingRight()
     this.updateCanvas();
@@ -27,6 +31,7 @@ Game.prototype.startLoop = function(){
     this.checkCollisions();
     this.checkOverFlow();
     this.drawCanvas();
+    
 
 
     if(this.gameOver === false){
@@ -124,7 +129,7 @@ Game.prototype.storeSquareToIndividualBlocks = function(){
 
   for(let i=0; i<numOfLine; i++){
     for(let j=0; j<numOfLine; j++)
-      this.staticSquares.push(new StaticSquare(this.canvas, this.activeSquare.x + i* this.activeSquare.blockSize, this.activeSquare.y + j * this.activeSquare.blockSize, this.activeSquare.blockSize ))
+      this.staticSquares.push(new StaticSquare(this.canvas, this.activeSquare.color, this.activeSquare.x + i* this.activeSquare.blockSize, this.activeSquare.y + j * this.activeSquare.blockSize, this.activeSquare.blockSize ))
   }
 
 }
@@ -199,10 +204,6 @@ Game.prototype.CheckIfFullLine = function(){
 
     //console.log(totalSize)
 
-    let infoOneLine = [possibleLines[i] , totalSize]
-
-    //console.log(infoOneLine)
-
     this.infoLines.push([possibleLines[i] , totalSize])
   }
 
@@ -224,34 +225,30 @@ Game.prototype.CheckIfFullLine = function(){
 
 //console.log('linesToRemove ', typeof(this.linesToRemove), this.linesToRemove)
 
-
   if(this.linesToRemove.length) this.RemoveFullLine()
 
+  this.score += this.linesToRemove.length * 250;
   
-  
-
 }
 
 Game.prototype.RemoveFullLine = function(){
 
-  // this.linesToRemove
-  // this.staticSquares
   let newStack = this.staticSquares;
 
+  // console.log(this.score);
 
-    for(let i=0; i<this.linesToRemove.length; i++){
+    for(let i=0; i<this.linesToRemove.length ; i++){
       newStack = newStack.filter((obj) => {
         return obj.y !== this.linesToRemove[i];
       })
     }
 
-    console.log(newStack)
-
+    // console.log(newStack)
 
   this.staticSquares = newStack;
 
   this.staticSquares.forEach((obj) => {
-    obj.y += this.activeSquare.blockSize;
+    obj.y += this.activeSquare.blockSize * this.linesToRemove.length;
   })
 
   
