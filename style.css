@@ -13,7 +13,7 @@ body {
   background-image: url(images/Venice\ Blue.jpg);
   background-repeat: no-repeat;
   background-position: center;
-  font-family: 'Bungee', cursive;
+  font-family: 'Geo', sans-serif;
   color: #043349;
 }
 
@@ -39,7 +39,7 @@ h1{
   border: none;
   border-radius: 5px;  
   font-size: 30px;
-  font-family: 'Bungee', cursive;
+  font-family: 'Geo', sans-serif;
   color: #1E6887;
   background: #74d3d2;
   
@@ -62,10 +62,12 @@ h1{
 .game-info{
   width: 250px;
   height: 500px;
+  font-size: 40px;
 }
 
 .game{
   width: 250px;
   height: 500px;
-  border: 10px solid #1D6786
+  border: 10px solid #1D6786;
+  border-radius: 3px;
 }

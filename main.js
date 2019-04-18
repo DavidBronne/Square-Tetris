@@ -43,13 +43,8 @@ function main() {
 
     const game = new Game(canvasElement);
 
-    function updateScore(){
-    
-      const scoreDisplay = document.querySelector('.score');
-      scoreDisplay.innerHTML = `SCORE: ${game.score}`;
-    }
-    
-    setInterval(updateScore, 200)
+    const scoreDisplay = document.querySelector('.score');
+    scoreDisplay.innerHTML = `SCORE: ${game.score}`;
 
 
     game.startLoop();

@@ -13,6 +13,10 @@ function Game (canvas) {
   this.score = 0;
   
   this.gameOver = false;
+
+  this.impactSound = new Audio ("sound/impact.aiff")
+  this.fullLineSound = new Audio ("sound/fullLine.wav")
+  this.GameOverSound = new Audio ("sound/gameOver.wav")
 }
 
 Game.prototype.startLoop = function(){
@@ -31,6 +35,8 @@ Game.prototype.startLoop = function(){
     this.checkCollisions();
     this.checkOverFlow();
     this.drawCanvas();
+
+    
     
 
 
@@ -113,6 +119,7 @@ Game.prototype.checkCollisions = function(){
 }
 
 Game.prototype.hasCollided = function(){
+  this.impactSound.play();
   // this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size));
   this.storeSquareToIndividualBlocks()
   this.CheckIfFullLine();
@@ -223,11 +230,15 @@ Game.prototype.CheckIfFullLine = function(){
     return obj[0]
   })
 
-//console.log('linesToRemove ', typeof(this.linesToRemove), this.linesToRemove)
+console.log('linesToRemove ', this.linesToRemove)
 
   if(this.linesToRemove.length) this.RemoveFullLine()
 
   this.score += this.linesToRemove.length * 250;
+    
+    const scoreDisplay = document.querySelector('.score');
+    scoreDisplay.innerHTML = `SCORE: ${this.score}`;
+  
   
 }
 
@@ -235,21 +246,53 @@ Game.prototype.RemoveFullLine = function(){
 
   let newStack = this.staticSquares;
 
+  let stacks =  []
   // console.log(this.score);
 
     for(let i=0; i<this.linesToRemove.length ; i++){
-      newStack = newStack.filter((obj) => {
-        return obj.y !== this.linesToRemove[i];
-      })
+
+      stacks.push(newStack.filter((obj) => {
+        return obj.y < this.linesToRemove[i]
+      }))
     }
 
-    // console.log(newStack)
+    stacks.push(this.staticSquares)
 
-  this.staticSquares = newStack;
+    // console.log(stacks)
 
-  this.staticSquares.forEach((obj) => {
-    obj.y += this.activeSquare.blockSize * this.linesToRemove.length;
-  })
+    // for(var i = stacks.length-1; i >= 0; i--){
+    //   for(let j=0; j<this.linesToRemove.length ; j++){
+    //     stacks[i] = stacks[i].filter((obj) => {
+    //       return obj.y !== this.linesToRemove[j]
+    //     })
+    //   }
+    // }
+
+    for(var i = stacks.length-1; i >= 0; i--){
+      if(i !== 0){
+        stacks[i] = stacks[i].filter((obj)=>{
+          return obj.y > this.linesToRemove[i-1]
+        })
+      }
+    }
+
+    stacks.forEach((stack,index)=>{
+      stack.forEach((square)=>{
+        square.y += this.activeSquare.blockSize * (stacks.length-1-index)
+      })
+    })
+
+    this.staticSquares = stacks.flat()
+
+
+
+  // this.staticSquares = newStack;
+
+
+  
+  // this.staticSquares.forEach((obj) => {
+  //   obj.y += this.activeSquare.blockSize
+  // })
 
   
 }
