@@ -1,7 +1,7 @@
 `use strict`
 
 
-function MovingSquare(canvas) {
+function MovingSquare(canvas, fast) {
   this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d')
 
@@ -20,14 +20,14 @@ function MovingSquare(canvas) {
   this.isTouchingLeft = false;
 
   this.counter = 0
-  this.speed = 30;
+  this.fast = fast;
+  this.speed = 30 - this.fast;
+  this.regularSpeed = 30 - this.fast;
 
   this.possibleColors = ['#cc0099', '#333399', '#00cc66'];
   this.color = this.possibleColors[random1to3 -1]
 
-  
 }
-
 
 MovingSquare.prototype.draw = function(){
   
@@ -43,18 +43,16 @@ MovingSquare.prototype.goLeft = function(){
   this.x = this.x - this.blockSize;
 }
 
-
 MovingSquare.prototype.moveFaster = function(){
   this.speed = 5;
 }
 
 MovingSquare.prototype.moveSlower = function(){
-  this.speed = 15;
+  this.speed = this.regularSpeed;
 }
 
-
 MovingSquare.prototype.update = function (){
- // this.x += this.direction * this.blockSize;
+
  if(this.counter < this.speed){
    this.counter ++;
  }else{
@@ -62,3 +60,4 @@ MovingSquare.prototype.update = function (){
   this.counter = 0;
  }
 }
+

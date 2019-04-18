@@ -33,6 +33,7 @@ function main() {
             </div>
           </div>
         </section>
+        <p class="level"></p>
         <p class="score"></p>
       </div>
       <canvas class="game"></canvas>
@@ -53,16 +54,13 @@ function main() {
     const scoreDisplay = document.querySelector('.score');
     scoreDisplay.innerHTML = `Score: ${game.score}`;
 
+    const levelDisplay = document.querySelector('.level');
+    levelDisplay.innerHTML = `Level: ${game.level}`;
 
     game.startLoop();
 
     game.setGameOverCallback(buildGameOverScreen);
     
-
-
-  
-
-
     document.addEventListener('keydown', function (event) {
       
       switch (event.keyCode) {

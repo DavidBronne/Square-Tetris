@@ -42,7 +42,6 @@ h1{
   font-family: 'Geo', sans-serif;
   color: #1E6887;
   background: #74d3d2;
-  
 }
 
 .game-container {
@@ -51,6 +50,8 @@ h1{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 200px;  /* to adjust with background */
+  
 }
 .screen{
   display: flex;

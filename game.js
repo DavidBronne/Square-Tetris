@@ -8,6 +8,7 @@ function Game (canvas) {
   this.infoLines = [];
 
   this.score = 0;
+  this.level = 1;
   
   this.gameOver = false;
 
@@ -16,18 +17,17 @@ function Game (canvas) {
   this.GameOverSound = new Audio ("sound/gameOver.wav");
 
   this.nextSquare;
+  this.fast = 0;
 }
 
 Game.prototype.startLoop = function(){
 
-  this.activeSquare = new MovingSquare(this.canvas)
-  this.nextSquare = new MovingSquare(this.canvas)
+  this.activeSquare = new MovingSquare(this.canvas, this.fast)
+  this.nextSquare = new MovingSquare(this.canvas, this.fast)
 
   this.displayNextSquare()
   
   const loop = () => {
-   
-  // console.log(this.score);
 
     this.isTouchingLeft()
     this.isTouchingRight()
@@ -36,6 +36,7 @@ Game.prototype.startLoop = function(){
     this.checkCollisions();
     this.checkOverFlow();
     this.drawCanvas();
+    
 
     if(this.gameOver === false){
       window.requestAnimationFrame(loop);
@@ -115,14 +116,11 @@ Game.prototype.checkCollisions = function(){
 
 Game.prototype.hasCollided = function(){
   this.impactSound.play();
-  // this.staticSquares.push(new StaticSquare(this.canvas,this.activeSquare.x,this.activeSquare.y,this.activeSquare.size));
   this.storeSquareToIndividualBlocks()
   this.CheckIfFullLine();
 
-  //console.log(this.infoLines)
-
   this.activeSquare = this.nextSquare;
-  this.nextSquare = new MovingSquare(this.canvas)
+  this.nextSquare = new MovingSquare(this.canvas, this.fast)
 
 
   this.displayNextSquare()
@@ -152,7 +150,6 @@ Game.prototype.storeSquareToIndividualBlocks = function(){
     for(let j=0; j<numOfLine; j++)
       this.staticSquares.push(new StaticSquare(this.canvas, this.activeSquare.color, this.activeSquare.x + i* this.activeSquare.blockSize, this.activeSquare.y + j * this.activeSquare.blockSize, this.activeSquare.blockSize ))
   }
-
 }
 
 Game.prototype.clearCanvas = function(){
@@ -193,13 +190,12 @@ Game.prototype.CheckIfFullLine = function(){
   let lineSizes;
   let possibleLines = [];
 
-  var bottomToCheck = () => {
+  var lineToCheck = () => {
     for (let i=0; i<=this.canvas.height - this.activeSquare.blockSize; i++ ){
       if(i%25 === 0) possibleLines.push(i)
     }
-  }
-  bottomToCheck()
-  //console.log(possibleLines)
+  } 
+  lineToCheck()
 
   for(let i=0; i<possibleLines.length; i++){
 
@@ -214,8 +210,6 @@ Game.prototype.CheckIfFullLine = function(){
       })
     }
 
-    //console.log(lineSizes)
-
     let totalSize;
 
     if(lineSizes.length > 0){
@@ -223,8 +217,6 @@ Game.prototype.CheckIfFullLine = function(){
         return sum + obj;
       })
     }
-
-    //console.log(totalSize)
 
     this.infoLines.push([possibleLines[i] , totalSize])
   }
@@ -239,32 +231,66 @@ Game.prototype.CheckIfFullLine = function(){
     return result;
   })
 
-  //console.log('this.linesToRemoveArr', typeof(linesToRemoveArr), linesToRemoveArr)
-
   this.linesToRemove = linesToRemoveArr.map((obj)=>{
     return obj[0]
   })
-
-  // console.log('linesToRemove ', this.linesToRemove)
-
-  if(this.linesToRemove.length) this.RemoveFullLine()
-
-  this.score += this.linesToRemove.length * 250;
-    
-    const scoreDisplay = document.querySelector('.score');
-    scoreDisplay.innerHTML = `Score: ${this.score}`;
   
+  if(this.linesToRemove.length) {
+    this.updateScore()
+    this.updateLevel()
+    this.animation()
+  }
+}
+
+Game.prototype.updateScore = function(){
+  this.score += this.linesToRemove.length * 250;
+  this.displayScore()
+}
+
+Game.prototype.displayScore = function(){
+  const scoreDisplay = document.querySelector('.score');
+  scoreDisplay.innerHTML = `Score: ${this.score}`;
+}
+
+
+Game.prototype.updateLevel = function (){
+
+  if(this.score > 0 && this.score % 500 === 0){
+    this.fast += 2;
+    this.level ++;
+    this.displayLevelUp();
+  }
+}
+
+Game.prototype.displayLevelUp = function(){
+  const levelDisplay = document.querySelector('.level');
+  levelDisplay.innerHTML = `Level: ${this.level}`;
+}
+
+Game.prototype.animation = function(){
+
+  for (let i=0; i<this.linesToRemove.length; i++){
+
+    let line = this.staticSquares.filter((obj) =>{
+    return obj.y === this.linesToRemove[i]
+    })
+
+    line.forEach((obj) =>{
+      obj.color = 'yellow'
+    })
+  }
+
+  this.removeFullLine();
   
 }
 
-Game.prototype.RemoveFullLine = function(){
-
+Game.prototype.removeFullLine = function(){
+  
   this.fullLineSound.play();
 
   let newStack = this.staticSquares;
 
   let stacks =  []
-  // console.log(this.score);
 
     for(let i=0; i<this.linesToRemove.length ; i++){
 
@@ -274,16 +300,6 @@ Game.prototype.RemoveFullLine = function(){
     }
 
     stacks.push(this.staticSquares)
-
-    // console.log(stacks)
-
-    // for(var i = stacks.length-1; i >= 0; i--){
-    //   for(let j=0; j<this.linesToRemove.length ; j++){
-    //     stacks[i] = stacks[i].filter((obj) => {
-    //       return obj.y !== this.linesToRemove[j]
-    //     })
-    //   }
-    // }
 
     for(var i = stacks.length-1; i >= 0; i--){
       if(i !== 0){
@@ -300,16 +316,5 @@ Game.prototype.RemoveFullLine = function(){
     })
 
     this.staticSquares = stacks.flat()
-
-
-
-  // this.staticSquares = newStack;
-
-
-  
-  // this.staticSquares.forEach((obj) => {
-  //   obj.y += this.activeSquare.blockSize
-  // })
-
   
 }
