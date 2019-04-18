@@ -65,10 +65,50 @@ h1{
   font-size: 40px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-
 }
+
+.next-info{
+  margin-bottom: 20px;
+}
+
+.next-square{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  align-content: center;
+}
+
+.container-next{
+  width: 100px;
+  height: 100px;
+  border: 10px solid #1D6786;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.size25{
+  width: 25px;
+  height: 25px;
+  background: #cc0099;
+}
+
+.size50{
+  width: 50px;
+  height: 50px;
+  background: #333399;
+}
+
+.size75{
+  width: 75px;
+  height: 75px;
+  background: #00cc66;
+}
+
 
 .game{
   width: 250px;

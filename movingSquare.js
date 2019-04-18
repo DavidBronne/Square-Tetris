@@ -20,7 +20,7 @@ function MovingSquare(canvas) {
   this.isTouchingLeft = false;
 
   this.counter = 0
-  this.speed = 15;
+  this.speed = 30;
 
   this.possibleColors = ['#cc0099', '#333399', '#00cc66'];
   this.color = this.possibleColors[random1to3 -1]

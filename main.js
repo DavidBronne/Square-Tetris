@@ -27,8 +27,11 @@ function main() {
     <section class="game-container">
       <div class="game-info">
         <section class="next-square">
-          <p>Next square</p>
-          <img src="" alt="next">
+          <p class="next-info">Next square</p>
+          <div class="container-next">
+            <div id="display-next">
+            </div>
+          </div>
         </section>
         <p class="score"></p>
       </div>
@@ -48,7 +51,7 @@ function main() {
     const game = new Game(canvasElement);
 
     const scoreDisplay = document.querySelector('.score');
-    scoreDisplay.innerHTML = `SCORE: ${game.score}`;
+    scoreDisplay.innerHTML = `Score: ${game.score}`;
 
 
     game.startLoop();

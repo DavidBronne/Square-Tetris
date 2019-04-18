@@ -3,12 +3,9 @@
 function Game (canvas) {
   this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d');
-  this.square = null;
-  this.speed = 1;
 
   this.staticSquares = [];
   this.infoLines = [];
-  this.linesToRemove;
 
   this.score = 0;
   
@@ -26,7 +23,7 @@ Game.prototype.startLoop = function(){
   this.activeSquare = new MovingSquare(this.canvas)
   this.nextSquare = new MovingSquare(this.canvas)
 
-
+  this.displayNextSquare()
   
   const loop = () => {
    
@@ -127,9 +124,25 @@ Game.prototype.hasCollided = function(){
   this.activeSquare = this.nextSquare;
   this.nextSquare = new MovingSquare(this.canvas)
 
-  const nextImg = document.querySelector('img')
-  nextImg.setAttribute('src', `images/big.svg`)
+
+  this.displayNextSquare()
+
 }
+
+Game.prototype.displayNextSquare = function(){
+  
+  const nextSqrDisplay = document.querySelector('#display-next')
+
+  if(this.nextSquare.size === 25){
+    nextSqrDisplay.setAttribute('class', 'size25')
+  } else if(this.nextSquare.size === 50){
+    nextSqrDisplay.setAttribute('class', 'size50')
+  } else if(this.nextSquare.size === 75){
+    nextSqrDisplay.setAttribute('class', 'size75')
+  }
+ 
+}
+
 
 Game.prototype.storeSquareToIndividualBlocks = function(){
 
@@ -161,7 +174,7 @@ Game.prototype.checkOverFlow = function(){
   this.staticSquares.forEach((static) => {
     if(static.y < 0){
       this.gameOver = true;
-      
+
       this.GameOverSound.play();
 
       this.buildGameOverScreen()
@@ -239,7 +252,7 @@ Game.prototype.CheckIfFullLine = function(){
   this.score += this.linesToRemove.length * 250;
     
     const scoreDisplay = document.querySelector('.score');
-    scoreDisplay.innerHTML = `SCORE: ${this.score}`;
+    scoreDisplay.innerHTML = `Score: ${this.score}`;
   
   
 }
