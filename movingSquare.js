@@ -3,14 +3,14 @@
 
 function MovingSquare(canvas, fast) {
   this.canvas = canvas;
-  this.ctx = this.canvas.getContext('2d')
+  this.ctx = this.canvas.getContext('2d');
 
   this.blockSize = this.canvas.width/10;
-  const random1to3 = (Math.floor(Math.random()*3) +1)
+  this.random1to3 = (Math.floor(Math.random()*3) +1);
 
   this.x = this.canvas.width/2 - this.blockSize;
   this.y = 0;
-  this.size = random1to3 * this.blockSize;
+  this.size = this.random1to3 * this.blockSize;
 
   this.direction = 0;
   this.currentSquare;
@@ -24,14 +24,34 @@ function MovingSquare(canvas, fast) {
   this.speed = 30 - this.fast;
   this.regularSpeed = 30 - this.fast;
 
-  this.possibleColors = ['#cc0099', '#333399', '#00cc66'];
-  this.color = this.possibleColors[random1to3 -1]
+  this.color;
 
 }
 
+MovingSquare.prototype.createBackground = function(){
+
+  let smallSquare = new Image();
+  smallSquare.src = 'images/blue.png';
+
+  let mediumSquare = new Image();
+  mediumSquare.src = 'images/pink.png';
+
+  let bigSquare = new Image();
+  bigSquare.src = 'images/yellow.png';
+
+  this.possibleBackground = [smallSquare, mediumSquare, bigSquare];
+  return this.color = this.possibleBackground[this.random1to3 - 1]
+}
+
 MovingSquare.prototype.draw = function(){
+    
   
-  this.ctx.fillStyle = this.color;
+  this.createBackground();
+  
+
+  console.log('after', this.color);
+
+  this.ctx.fillStyle = this.ctx.createPattern(this.possibleBackground[this.random1to3 -1], 'repeat');
   this.ctx.fillRect(this.x, this.y, this.size, this.size);
 }
 
@@ -52,6 +72,8 @@ MovingSquare.prototype.moveSlower = function(){
 }
 
 MovingSquare.prototype.update = function (){
+
+  console.log('before', this.color );
 
  if(this.counter < this.speed){
    this.counter ++;

@@ -38,6 +38,8 @@ Game.prototype.startLoop = function(){
     this.drawCanvas();
     
 
+    
+
     if(this.gameOver === false){
       window.requestAnimationFrame(loop);
     }
@@ -147,8 +149,12 @@ Game.prototype.storeSquareToIndividualBlocks = function(){
   const numOfLine = this.activeSquare.size / this.activeSquare.blockSize
 
   for(let i=0; i<numOfLine; i++){
-    for(let j=0; j<numOfLine; j++)
+    for(let j=0; j<numOfLine; j++){
+      console.log(this.activeSquare.color);
+      
       this.staticSquares.push(new StaticSquare(this.canvas, this.activeSquare.color, this.activeSquare.x + i* this.activeSquare.blockSize, this.activeSquare.y + j * this.activeSquare.blockSize, this.activeSquare.blockSize ))
+  
+    }
   }
 }
 
