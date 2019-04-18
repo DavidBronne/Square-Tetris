@@ -26,6 +26,10 @@ function main() {
     buildDom(`
     <section class="game-container">
       <div class="game-info">
+        <section class="next-square">
+          <p>Next square</p>
+          <img src="" alt="next">
+        </section>
         <p class="score"></p>
       </div>
       <canvas class="game"></canvas>

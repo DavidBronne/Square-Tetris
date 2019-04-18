@@ -14,14 +14,18 @@ function Game (canvas) {
   
   this.gameOver = false;
 
-  this.impactSound = new Audio ("sound/impact.aiff")
-  this.fullLineSound = new Audio ("sound/fullLine.wav")
-  this.GameOverSound = new Audio ("sound/gameOver.wav")
+  this.impactSound = new Audio ("sound/impact.wav");
+  this.fullLineSound = new Audio ("sound/fullLine.wav");
+  this.GameOverSound = new Audio ("sound/gameOver.wav");
+
+  this.nextSquare;
 }
 
 Game.prototype.startLoop = function(){
 
-  this.activeSquare = new MovingSquare(this.canvas);
+  this.activeSquare = new MovingSquare(this.canvas)
+  this.nextSquare = new MovingSquare(this.canvas)
+
 
   
   const loop = () => {
@@ -36,10 +40,6 @@ Game.prototype.startLoop = function(){
     this.checkOverFlow();
     this.drawCanvas();
 
-    
-    
-
-
     if(this.gameOver === false){
       window.requestAnimationFrame(loop);
     }
@@ -47,8 +47,6 @@ Game.prototype.startLoop = function(){
 
   loop();
 }
-
-// proto movement square
 
 Game.prototype.checkScreenCollision = function() {
 
@@ -126,8 +124,11 @@ Game.prototype.hasCollided = function(){
 
   //console.log(this.infoLines)
 
-  this.activeSquare = new MovingSquare(this.canvas);
-  //console.log(this.staticSquares);
+  this.activeSquare = this.nextSquare;
+  this.nextSquare = new MovingSquare(this.canvas)
+
+  const nextImg = document.querySelector('img')
+  nextImg.setAttribute('src', `images/big.svg`)
 }
 
 Game.prototype.storeSquareToIndividualBlocks = function(){
@@ -160,6 +161,9 @@ Game.prototype.checkOverFlow = function(){
   this.staticSquares.forEach((static) => {
     if(static.y < 0){
       this.gameOver = true;
+      
+      this.GameOverSound.play();
+
       this.buildGameOverScreen()
     }
   });
@@ -169,8 +173,6 @@ Game.prototype.setGameOverCallback = function(buildGameOverScreen){
   this.buildGameOverScreen = buildGameOverScreen;
 }
 
-
-// proto removing line
 
 Game.prototype.CheckIfFullLine = function(){
 
@@ -230,7 +232,7 @@ Game.prototype.CheckIfFullLine = function(){
     return obj[0]
   })
 
-console.log('linesToRemove ', this.linesToRemove)
+  // console.log('linesToRemove ', this.linesToRemove)
 
   if(this.linesToRemove.length) this.RemoveFullLine()
 
@@ -243,6 +245,8 @@ console.log('linesToRemove ', this.linesToRemove)
 }
 
 Game.prototype.RemoveFullLine = function(){
+
+  this.fullLineSound.play();
 
   let newStack = this.staticSquares;
 
