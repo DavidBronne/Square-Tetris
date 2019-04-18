@@ -45,11 +45,7 @@ MovingSquare.prototype.createBackground = function(){
 
 MovingSquare.prototype.draw = function(){
     
-  
   this.createBackground();
-  
-
-  console.log('after', this.color);
 
   this.ctx.fillStyle = this.ctx.createPattern(this.possibleBackground[this.random1to3 -1], 'repeat');
   this.ctx.fillRect(this.x, this.y, this.size, this.size);
@@ -72,8 +68,6 @@ MovingSquare.prototype.moveSlower = function(){
 }
 
 MovingSquare.prototype.update = function (){
-
-  console.log('before', this.color );
 
  if(this.counter < this.speed){
    this.counter ++;

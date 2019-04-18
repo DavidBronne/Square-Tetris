@@ -124,9 +124,7 @@ Game.prototype.hasCollided = function(){
   this.activeSquare = this.nextSquare;
   this.nextSquare = new MovingSquare(this.canvas, this.fast)
 
-
   this.displayNextSquare()
-
 }
 
 Game.prototype.displayNextSquare = function(){
@@ -140,7 +138,6 @@ Game.prototype.displayNextSquare = function(){
   } else if(this.nextSquare.size === 75){
     nextSqrDisplay.setAttribute('class', 'size75')
   }
- 
 }
 
 
@@ -282,13 +279,17 @@ Game.prototype.animation = function(){
     })
 
     line.forEach((obj) =>{
-      obj.color = 'yellow'
+      let smallSquare = new Image();
+      smallSquare.src = 'images/grey.png'
+      obj.color = smallSquare;
     })
   }
-
-  this.removeFullLine();
+  setTimeout(() => {
+    this.removeFullLine();
+  },100)
   
 }
+
 
 Game.prototype.removeFullLine = function(){
   

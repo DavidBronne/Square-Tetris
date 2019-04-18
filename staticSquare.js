@@ -10,17 +10,10 @@ function StaticSquare(canvas,color,x,y,size) {
   this.size = size;
   this.blockSize = this.canvas.width/10;
   this.color = color;
-
-  // this.smallSquare;
-  // this.mediumSquare;
-  // this.bigSquare;
-
-  // this.possibleBackground = [];
  
 }
 
 StaticSquare.prototype.draw = function(){
-
 
     this.ctx.fillStyle = this.ctx.createPattern(this.color, 'repeat');
     this.ctx.fillRect(this.x, this.y, this.size, this.size);
