@@ -27,6 +27,13 @@ body {
   text-shadow: 0 0 7px #651F52;
 }
 
+.screen{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 main{
   height: 600px;
   width : 600px;
@@ -72,12 +79,6 @@ h1{
   margin-right: 240px;
   
   
-}
-.screen{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
 }
 
 .game-info{

@@ -14,7 +14,7 @@ function main() {
   function buildSplashScreen(){
     buildDom(`
       <section class="screen">
-        <img class="logo" src="/images/logo.png" alt="Square Tetris">
+        <img class="logo" src="./images/logo.png" alt="Square Tetris">
         <button class="start button">START</button>
       </section>
     `);
