@@ -37,9 +37,6 @@ Game.prototype.startLoop = function(){
     this.checkOverFlow();
     this.drawCanvas();
     
-
-    
-
     if(this.gameOver === false){
       window.requestAnimationFrame(loop);
     }

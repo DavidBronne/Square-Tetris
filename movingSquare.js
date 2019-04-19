@@ -13,16 +13,14 @@ function MovingSquare(canvas, fast) {
   this.size = this.random1to3 * this.blockSize;
 
   this.direction = 0;
-  this.currentSquare;
-  this.nextSquare;
 
   this.isTouchingRight = false;
   this.isTouchingLeft = false;
 
   this.counter = 0
   this.fast = fast;
-  this.speed = 30 - this.fast;
-  this.regularSpeed = 30 - this.fast;
+  this.speed = 15 - this.fast;
+  this.regularSpeed = 15 - this.fast;
 
   this.color;
 

@@ -66,6 +66,10 @@ h1{
   text-shadow: 0 0 15px #dbd56f;
 }
 
+.button:focus{
+  display: none;
+}
+
 .start{
   margin-top: -180px
 }

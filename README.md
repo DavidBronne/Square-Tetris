@@ -1,15 +1,16 @@
-# TETRIS
+# SQUARE-TETRIS
 
 ## Description
-Tetris is a game where the player have to stack blocks of different sizes to realize one full line. After this, the line disappears and the game continues. There is no end. The game is over when one one the piece get stuck to the top.
+Tetris is a game where the player have to stack blocks of different sizes to realize one full line. After this, the line disappears and the game continues. There is no end. The game is over when one one the piece get stuck to the top. This version is only with squares of different sizes.
 
 
 ## MVP (DOM - CANVAS)
 *CANVAS*, This is a game where the player can move and stack block.
 
 ## Backlog
-- Speed Level
 - Score
+- Speed Level
+- display the next square
 - Bonus / Malus
 
 
@@ -37,6 +38,21 @@ Game(){
 Game.prototype.startLoop(){
 }
 
+Game.prototype.checkCollisions{
+}
+
+Game.prototype.CheckIfFullLine{
+}
+
+Game.prototype.updateLevel{
+}
+
+Game.prototype.checkOverFlow = function(){
+}
+
+Game.prototype.displayNextSquare{
+}
+
 Game.prototype.clearCanvas = function(){
 }
 
@@ -46,21 +62,23 @@ Game.prototype.updateCanvas = function(){
 Game.prototype.drawCanvas = function(){ 
 }
 
-Game.prototype.checkOverFlow = function(){
-}
-
 Game.prototype.setGameOver = function(){
 }
 ```
 
-### block.js
+### movingSquare.js
 ```
-block(){
+MovingSquare(){
+  this.camvas;
   this.x;
   this.y;
   this.size;
   this.direction;
-  this.speed;  
+  this.speed; 
+  this.color;
+}
+
+MovingSquare.prototype.draw{
 }
 
 Character.prototype.setDirection(){
@@ -72,6 +90,20 @@ Character.prototype.goDown(){
 Character.prototype.rush(){
 }
 
+```
+
+### staticSquare.js
+```
+StaticSquare(){
+  this.camvas;
+  this.x;
+  this.y;
+  this.size;
+  this.color;
+}
+
+StaticSquare.prototype.draw{
+}
 
 ```
 
@@ -106,12 +138,14 @@ Character.prototype.rush(){
 - Game - setGameOver
 - Game - collision
 - Game - addEventListener
-- Block - create
-- Block - goDown
+- movingSquare - create
+- movingSquare - goDown
+- staticSquare - store
+- staticSquare - remove if full line
 - Game - checkOverFlow
-- Block - setDirection
-- Block - Rush
-- Block - SelectRandomSize
+- movingSquare - setDirection
+- movingSquare - Rush
+- movingSquare - SelectRandomSize
 
 
 ## Links
