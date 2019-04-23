@@ -1,17 +1,15 @@
 `use strict`
 
 
-function main() {
+const main = () => {
 
   const mainElement = document.querySelector('.container');
 
-  buildDom = function (html){
+  buildDom = (html) => {
     mainElement.innerHTML = html;
   }
 
-  buildSplashScreen();
-
-  function buildSplashScreen(){
+  function buildSplashScreen () {
     buildDom(`
       <section class="screen">
         <img class="logo" src="./images/logo.png" alt="Square Tetris">
@@ -21,8 +19,10 @@ function main() {
     const startButton = document.querySelector('.start');
     startButton.addEventListener('click', buildGameSreen);
   }
+
+  buildSplashScreen();
   
-  function buildGameSreen(){
+  function buildGameSreen () {
     buildDom(`
     <section class="game-container">
       <div class="game-info">
@@ -38,7 +38,7 @@ function main() {
       </div>
       <canvas class="game"></canvas>
     </section>
-  `);
+    `);
 
     const gameInfo = document.querySelector('.game-info');
 
@@ -61,7 +61,7 @@ function main() {
 
     game.setGameOverCallback(buildGameOverScreen);
     
-    document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown',(event) => {
       
       switch (event.keyCode) {
         case 39:
@@ -86,7 +86,7 @@ function main() {
 
     })
 
-    document.addEventListener('keyup', function (event) {
+    document.addEventListener('keyup', (event) => {
       
       switch (event.keyCode) {
         case 40:
@@ -97,11 +97,11 @@ function main() {
           break;
       }
     })
-    }
+  }
 
 
 
-  function buildGameOverScreen(){
+ function buildGameOverScreen () {
     buildDom(`
       <section class="screen">
       <h1>Game Over</h1>
@@ -112,10 +112,6 @@ function main() {
     const restartButton = document.querySelector('.restart');
     restartButton.addEventListener('click', buildGameSreen);
   }
-
-
-
-
 }
 
 window.addEventListener('load', main);
