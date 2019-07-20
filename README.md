@@ -158,7 +158,7 @@ StaticSquare.prototype.draw{
 ### Git
 URls for the project repo and deploy
 [Link Repo](https://github.com/chloeleteinturier/Tetris)
-[Link Deploy](https://chloeleteinturier.github.io/Tetris/)
+[Link Deploy](https://chloeleteinturier.github.io/Square-Tetris/)
 
 
 ### Slides
